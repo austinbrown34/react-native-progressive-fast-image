@@ -36,6 +36,7 @@ export interface IProgressiveFastImageProps {
   thumbnailAnimationDuration?: number;
   imageAnimationDuration?: number;
   useNativeDriver?: boolean;
+  onLoadEnd?:: void;
 }
 
 interface IState {
@@ -85,6 +86,7 @@ class ProgressiveImage extends React.Component<
 
   onLoadEnd = () => {
     this.setState({ showDefault: false });
+    this.props.onLoadEnd();
   };
 
   onError = () => {
@@ -123,7 +125,7 @@ class ProgressiveImage extends React.Component<
       thumbnailSource,
       loadingImageComponent,
       blurRadius = 15,
-      loadingImageStyle,
+      loadingImageStyle
       ...props
     } = this.props;
 
@@ -147,6 +149,7 @@ class ProgressiveImage extends React.Component<
           source={thumbnailSource}
           onLoad={this.onThumbnailLoad}
           style={[{ opacity: this.animatedThumbnailImage }, style]}
+
         />
         <AnimatedFastImage
           {...props}
